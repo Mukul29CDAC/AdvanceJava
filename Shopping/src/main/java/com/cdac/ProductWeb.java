@@ -15,19 +15,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-@WebServlet("/category")
-public class Category extends HttpServlet {
+@WebServlet("/Product")
+public class ProductWeb extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
+    public ProductWeb() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    Connection db = null;
-	    PreparedStatement pst = null;
-	    ResultSet result = null;
-
-	    PrintWriter out = response.getWriter();
-	    ServletContext ctx = getServletContext();
-	    String url = ctx.getInitParameter("dbUrl");
-
+	
+		Connection db = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		 PrintWriter out = response.getWriter();
+		String tmp = request.getParameter("id");
+		int id = Integer.parseInt(tmp);
+		
+		ServletContext ctx = getServletContext();
+		String url = ctx.getInitParameter("dbUrl");
 	    // Start of HTML output
 	    out.println("<html>");
 	    out.println("<head>");
@@ -45,7 +54,7 @@ public class Category extends HttpServlet {
 	    out.println("  --transition-duration: 0.3s;");
 	    out.println("}");
 	    out.println("table {");
-	    out.println("  width: 100%;");
+	    out.println("  width: 70%;");
 	    out.println("  border-collapse: separate;");
 	    out.println("  border-spacing: 0;");
 	    out.println("  background-color: var(--color-bg);");
@@ -54,6 +63,7 @@ public class Category extends HttpServlet {
 	    out.println("  border-radius: var(--border-radius);");
 	    out.println("  box-shadow: 0 4px 12px var(--shadow-color);");
 	    out.println("  overflow: hidden;");
+	    out.println("  margin: auto;");
 	    out.println("  margin-bottom: 1.5rem;");
 	    out.println("}");
 	    out.println("thead {");
@@ -99,29 +109,37 @@ public class Category extends HttpServlet {
 	    out.println("</style>");
 	    out.println("</head>");
 	    out.println("<body>");
-
-	    try {
-	        db = DriverManager.getConnection(url, "root", "cdac");
-	        pst = db.prepareStatement("select * from categories");
-	        result = pst.executeQuery();
-	        out.println("<table> <thead> <th>Category Id</th> <th>Category Name</th> <th>Category Description</th> <th>Category Description</th> </thead>");
+	
+		try {
+			db = DriverManager.getConnection(url,"root","cdac");
+			pst = db.prepareStatement("select * from products where catId = ?");
+			pst.setInt(1, id);
+			
+			result = pst.executeQuery();
+		    
+		    out.println("<table> <thead> <th>Product Id</th> <th>Product Name</th> <th>Product Price</th> <th>Product Image</th> <th>Add to Cart</th> </thead>");
 	        out.println("<tbody>");
-	        while (result.next()) {
-	            out.println("<tr> <td>" + result.getString(1) + "</td>");
-	            out.println("<td> <a style='text-decoration:none; color:black' href=Product?id="+result.getString(1)+">" + result.getString(2) + "</a></td>");
-	            out.println("<td>" + result.getString(3) + "</td>");
-	            out.println("<td>" + result.getString(4) + "</td>");
-	            out.println("</tr>");
-	        }
-	        out.println("</tbody>");
-	        out.println("</table>");
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    out.println("</body>");
-	    out.println("</html>");
+			while(result.next()) {
+				 out.println("<tr> <td>" + result.getInt("prodId") + "</td>");
+				   out.println("<td>" + result.getString("prodName") + "</td>");
+//		            out.println("<td>"+ "<a style='text-decoration:none; color:black' href=Product?id=">" + result.getString("prodName") + "</a>"+"</td>");
+		            out.println("<td>" + result.getInt("prodPrice") + "</td>");
+		            out.println("<td>" + result.getString("prodImg") + "</td>");
+		            out.println("<td><a href = 'Cart?cid="+id+"&pid="+result.getInt("prodId")+"'><button> Add To Cart</button></a></td>");
+		        
+		            out.println("</tr>");
+			}
+			   out.println("</tbody>");
+		        out.println("</table>");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		   out.println("</body>");
+		    out.println("</html>");
 	}
+	
+
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

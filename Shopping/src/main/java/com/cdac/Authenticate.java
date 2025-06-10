@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.cdac.object.AddToCartInf;
+import com.cdac.object.AddToCartObject;
 import com.mysql.cj.xdevapi.Statement;
 
 /**
@@ -22,13 +26,12 @@ import com.mysql.cj.xdevapi.Statement;
 public class Authenticate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		HttpSession session= req.getSession();
+		AddToCartInf cart=new AddToCartObject();
+		session.setAttribute("cart", cart);
 		
 		ServletContext ctx = getServletContext();
 		String url = ctx.getInitParameter("dbUrl");
@@ -49,7 +52,7 @@ public class Authenticate extends HttpServlet {
 			result  = pst.executeQuery();
 			
 			if(result.next()) {
-					res.sendRedirect("category");
+					res.sendRedirect("Category");
 			}else {
 				res.getWriter().println("Invalid users");
 			}

@@ -1,0 +1,11 @@
+[{"catId":1, "catName":"Clothes", "catDesc":"Garments", "catUrl":"www.facebook.com"},
+ {"catId":1, "catName":"Electronics", "catDesc":"This category includes all electronic devices such as computers, smartphones, and televisions.", "catUrl":"https://example.com/images/electronics.jpg"},
+ {"catId":2, "catName":"Clothing", "catDesc":"A wide selection of apparel for men, women, and children.", "catUrl":"https://example.com/images/clothing.jpg"},
+ {"catId":3, "catName":"Home & Kitchen", "catDesc":"Everything you need to furnish and equip your home, from furniture to kitchen appliances.", "catUrl":"https://example.com/images/home_kitchen.jpg"},
+ {"catId":4, "catName":"Books", "catDesc":"A vast collection of books in various genres, including fiction, non-fiction, and textbooks.", "catUrl":"https://example.com/images/books.jpg"},
+ {"catId":5, "catName":"Sports & Outdoors", "catDesc":"Equipment and apparel for various sports and outdoor activities.", "catUrl":"https://example.com/images/sports_outdoors.jpg"},
+ {"catId":6, "catName":"Toys & Games", "catDesc":"A wide variety of toys and games for children of all ages.", "catUrl":"https://example.com/images/toys_games.jpg"},
+ {"catId":7, "catName":"Beauty & Personal Care", "catDesc":"Cosmetics, skincare, haircare, and personal hygiene products.", "catUrl":"https://example.com/images/beauty.jpg"},
+ {"catId":8, "catName":"Automotive", "catDesc":"Parts, accessories, and tools for cars, trucks, and motorcycles.", "catUrl":"https://example.com/images/automotive.jpg"},
+ {"catId":9, "catName":"Health & Household", "catDesc":"Health-related products, household supplies, and cleaning products.", "catUrl":"https://example.com/images/health.jpg"},
+ {"catId":10, "catName":"Pet Supplies", "catDesc":"Food, toys, and accessories for your beloved pets.", "catUrl":"https://example.com/images/pets.jpg"}]

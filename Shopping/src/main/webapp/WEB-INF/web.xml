@@ -5,6 +5,6 @@
 
 	<context-param>
 		<param-name>dbUrl</param-name>
-		<param-value>jdbc:mysql://localhost:3306/mukul</param-value>
+		<param-value>jdbc:mysql://localhost:3306/online_shopping</param-value>
 	</context-param>
 </web-app>

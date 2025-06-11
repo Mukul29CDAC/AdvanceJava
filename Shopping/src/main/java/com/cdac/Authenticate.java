@@ -36,23 +36,23 @@ public class Authenticate extends HttpServlet {
 		ServletContext ctx = getServletContext();
 		String url = ctx.getInitParameter("dbUrl");
 		
-		String name = req.getParameter("username");
+		String username = req.getParameter("username");
 		String password  = req.getParameter("password");
 		
 		Connection db = null;
-		Statement st = null;
 		PreparedStatement pst  = null;
 		ResultSet result = null;
 		
 		try {
 			db = DriverManager.getConnection(url,"root","cdac");
 			pst = db.prepareStatement("select * from users where username = ? and password = ?");
-			pst.setString(1, name);
+			pst.setString(1, username);
 			pst.setString(2, password);
 			result  = pst.executeQuery();
 			
 			if(result.next()) {
-					res.sendRedirect("Category");
+				session.setAttribute("username", username);
+				res.sendRedirect("Category");
 			}else {
 				res.getWriter().println("Invalid users");
 			}

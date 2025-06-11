@@ -37,7 +37,6 @@ public class AddToCart extends HttpServlet {
 		HttpSession session= request.getSession();
 		AddToCartInf cart=(AddToCartObject)session.getAttribute("cart");
 		 PrintWriter out = response.getWriter();
-		 
 		 Iterator<Product> result=cart.getAllProducts();
 		
 	    // Start of HTML output
@@ -131,7 +130,9 @@ public class AddToCart extends HttpServlet {
 	        out.println("</tbody>");
 		       out.println("</table>");
 		       out.print("<h3>Total : "+total+"</h3>");
-		       out.print("<h5><a href='Payment'>PayNow</a></h3>");
+		       out.print("<h5><a href='Payment.html'>PayNow</a></h3>");
+
+				 session.setAttribute("total", total);
 		
 		   out.println("</body>");
 		    out.println("</html>");

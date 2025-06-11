@@ -25,8 +25,7 @@ public class AddToCartObject implements AddToCartInf{
 
 	@Override
 	public boolean removeAllProducts() {
-		// TODO Auto-generated method stub
-		return false;
+		return cart.removeAll(cart);
 	}
 
 	

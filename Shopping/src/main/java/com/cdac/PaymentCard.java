@@ -81,19 +81,14 @@ public class PaymentCard extends HttpServlet {
 				pst2.executeUpdate();
 				
 				cart.removeAllProducts();
-				response.getWriter().println("<font color='green'>Payment Successfully . Continue Shopping </font>");
-				RequestDispatcher rd=request.getRequestDispatcher("Category");
-				rd.include(request, response);
+				response.sendRedirect("PaymentSuccessful.html");
 				}else {
-					response.getWriter().println("<font color='red'>Payment Unsuccessfully . Please try again </font>");
-					RequestDispatcher rd=request.getRequestDispatcher("AddToCart");
-					rd.include(request, response);
+					response.getWriter().println("<font color='red'>Payment Unsuccessfully due to low balance . Please try again  </font>");
+					response.sendRedirect("PaymentUnsuccessful.html");
 				}
 			}else {
 				response.getWriter().println("<font color='red'>Payment Unsuccessfully . Please try again </font>");
-				response.sendRedirect("AddToCart");
-//				RequestDispatcher rd=request.getRequestDispatcher("AddToCart");
-//				rd.include(request, response);
+				response.sendRedirect("PaymentUnsuccessful.html");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

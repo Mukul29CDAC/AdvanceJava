@@ -34,10 +34,6 @@ public class PaymentCard extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session=request.getSession();
-		ServletContext ctx = getServletContext();
-	    String dburl = ctx.getInitParameter("dbUrl");
-		String dbUser = ctx.getInitParameter("dbUser");
-		String dbPassword = ctx.getInitParameter("dbPassword");
 		
 
 		AddToCartInf cart=(AddToCartObject) session.getAttribute("cart");
@@ -58,7 +54,7 @@ public class PaymentCard extends HttpServlet {
 		
 		try {
 			Connection connection=(Connection) getServletContext().getAttribute("db");
-			pst = db.prepareStatement("select * from card where cardno = ? and expmon = ? and expyear = ? and pin = ? and balance > ?");
+			pst = connection.prepareStatement("select * from card where cardno = ? and expmon = ? and expyear = ? and pin = ? and balance > ?");
 			pst.setInt(1, cardno);
 			pst.setInt(2, expmon);
 			pst.setInt(3, expyear);
@@ -69,13 +65,13 @@ public class PaymentCard extends HttpServlet {
 			
 			if(result.next()) {
 				int balance=result.getInt("balance") - total;
-				pst = db.prepareStatement("update card set balance=? where cardno=?");
+				pst = connection.prepareStatement("update card set balance=? where cardno=?");
 				pst.setInt(1, balance);
 				pst.setInt(2, result.getInt("cardno"));
 				if(pst.executeUpdate()>0) {
 				
 				
-				pst2 = db.prepareStatement("INSERT INTO transactions (`username`, `cardno`, `amount`, `status`) VALUES (?,?,?,?);");
+				pst2 = connection.prepareStatement("INSERT INTO transactions (`username`, `cardno`, `amount`, `status`) VALUES (?,?,?,?);");
 				pst2.setString(1, username);
 				pst2.setInt(2, result.getInt("cardno"));
 				pst2.setInt(3, total);

@@ -29,10 +29,6 @@ public class ProductWeb extends HttpServlet {
 		String tmp = request.getParameter("id");
 		int id = Integer.parseInt(tmp);
 		
-		ServletContext ctx = getServletContext();
-	    String dburl = ctx.getInitParameter("dbUrl");
-		String dbUser = ctx.getInitParameter("dbUser");
-		String dbPassword = ctx.getInitParameter("dbPassword");
 	    // Start of HTML output
 	    out.println("<html>");
 	    out.println("<head>");
@@ -107,8 +103,8 @@ public class ProductWeb extends HttpServlet {
 	    out.println("<body>");
 	
 		try {
-			Connection connection=(Connection) getServletContext().getAttribute("db");
-			pst = db.prepareStatement("select * from products where catId = ?");
+			Connection connection =(Connection) getServletContext().getAttribute("db");
+			pst = connection.prepareStatement("select * from products where catId = ?");
 			pst.setInt(1, id);
 			
 			result = pst.executeQuery();

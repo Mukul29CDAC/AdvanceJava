@@ -20,15 +20,11 @@ public class CategoryWeb extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    Connection db = null;
+	    Connection connection = null;
 	    PreparedStatement pst = null;
 	    ResultSet result = null;
 
 	    PrintWriter out = response.getWriter();
-	    ServletContext ctx = getServletContext();
-	    String dburl = ctx.getInitParameter("dbUrl");
-		String dbUser = ctx.getInitParameter("dbUser");
-		String dbPassword = ctx.getInitParameter("dbPassword");
 
 	    // Start of HTML output
 	    out.println("<html>");
@@ -105,8 +101,8 @@ public class CategoryWeb extends HttpServlet {
 
 	    try {
 //	        db = DriverManager.getConnection(dburl,dbUser ,dbPassword );
-	        db =(Connection) ctx.getAttribute("db");
-	        pst = db.prepareStatement("select * from categories");
+	        connection =(Connection) getServletContext().getAttribute("db");
+	        pst = connection.prepareStatement("select * from categories");
 	        result = pst.executeQuery();
 	        out.println("<table> <thead> <th>Category Id</th> <th>Category Name</th> <th>Category Description</th> <th>Category Image</th> </thead>");
 	        out.println("<tbody>");

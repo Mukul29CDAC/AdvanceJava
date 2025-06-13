@@ -38,10 +38,12 @@ public class Cart extends HttpServlet {
 		PrintWriter out= response.getWriter();
 		
 		ServletContext ctx = getServletContext();
-		String url = ctx.getInitParameter("dbUrl");
+	    String dburl = ctx.getInitParameter("dbUrl");
+		String dbUser = ctx.getInitParameter("dbUser");
+		String dbPassword = ctx.getInitParameter("dbPassword");
 		
 		try {
-			Connection db = DriverManager.getConnection(url,"root","cdac");
+	        Connection db =(Connection) ctx.getAttribute("db");
 			PreparedStatement pst = db.prepareStatement("select * from products where catId = ? and prodid=?");
 			
 			pst.setInt(1, cid);

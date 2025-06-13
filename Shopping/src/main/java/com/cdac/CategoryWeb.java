@@ -26,7 +26,9 @@ public class CategoryWeb extends HttpServlet {
 
 	    PrintWriter out = response.getWriter();
 	    ServletContext ctx = getServletContext();
-	    String url = ctx.getInitParameter("dbUrl");
+	    String dburl = ctx.getInitParameter("dbUrl");
+		String dbUser = ctx.getInitParameter("dbUser");
+		String dbPassword = ctx.getInitParameter("dbPassword");
 
 	    // Start of HTML output
 	    out.println("<html>");
@@ -102,7 +104,8 @@ public class CategoryWeb extends HttpServlet {
 	    out.println("<body>");
 
 	    try {
-	        db = DriverManager.getConnection(url, "root", "cdac");
+//	        db = DriverManager.getConnection(dburl,dbUser ,dbPassword );
+	        db =(Connection) ctx.getAttribute("db");
 	        pst = db.prepareStatement("select * from categories");
 	        result = pst.executeQuery();
 	        out.println("<table> <thead> <th>Category Id</th> <th>Category Name</th> <th>Category Description</th> <th>Category Image</th> </thead>");

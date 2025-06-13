@@ -34,7 +34,9 @@ public class Authenticate extends HttpServlet {
 		session.setAttribute("cart", cart);
 		
 		ServletContext ctx = getServletContext();
-		String url = ctx.getInitParameter("dbUrl");
+		String dburl = ctx.getInitParameter("dbUrl");
+		String dbUser = ctx.getInitParameter("dbUser");
+		String dbPassword = ctx.getInitParameter("dbPassword");
 		
 		String username = req.getParameter("username");
 		String password  = req.getParameter("password");
@@ -44,7 +46,9 @@ public class Authenticate extends HttpServlet {
 		ResultSet result = null;
 		
 		try {
-			db = DriverManager.getConnection(url,"root","cdac");
+			db = DriverManager.getConnection(dburl,dbUser,dbPassword);
+			
+			getServletContext().setAttribute("db", db);
 			pst = db.prepareStatement("select * from users where username = ? and password = ?");
 			pst.setString(1, username);
 			pst.setString(2, password);

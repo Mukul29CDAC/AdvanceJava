@@ -35,7 +35,9 @@ public class PaymentCard extends HttpServlet {
 		
 		HttpSession session=request.getSession();
 		ServletContext ctx = getServletContext();
-		String url = ctx.getInitParameter("dbUrl");
+	    String dburl = ctx.getInitParameter("dbUrl");
+		String dbUser = ctx.getInitParameter("dbUser");
+		String dbPassword = ctx.getInitParameter("dbPassword");
 		
 
 		AddToCartInf cart=(AddToCartObject) session.getAttribute("cart");
@@ -55,7 +57,7 @@ public class PaymentCard extends HttpServlet {
 		ResultSet result = null;
 		
 		try {
-			db = DriverManager.getConnection(url,"root","cdac");
+			Connection connection=(Connection) getServletContext().getAttribute("db");
 			pst = db.prepareStatement("select * from card where cardno = ? and expmon = ? and expyear = ? and pin = ? and balance > ?");
 			pst.setInt(1, cardno);
 			pst.setInt(2, expmon);

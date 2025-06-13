@@ -18,12 +18,6 @@ import java.sql.SQLException;
 @WebServlet("/Product")
 public class ProductWeb extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-
-    public ProductWeb() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,7 +30,9 @@ public class ProductWeb extends HttpServlet {
 		int id = Integer.parseInt(tmp);
 		
 		ServletContext ctx = getServletContext();
-		String url = ctx.getInitParameter("dbUrl");
+	    String dburl = ctx.getInitParameter("dbUrl");
+		String dbUser = ctx.getInitParameter("dbUser");
+		String dbPassword = ctx.getInitParameter("dbPassword");
 	    // Start of HTML output
 	    out.println("<html>");
 	    out.println("<head>");
@@ -111,7 +107,7 @@ public class ProductWeb extends HttpServlet {
 	    out.println("<body>");
 	
 		try {
-			db = DriverManager.getConnection(url,"root","cdac");
+			Connection connection=(Connection) getServletContext().getAttribute("db");
 			pst = db.prepareStatement("select * from products where catId = ?");
 			pst.setInt(1, id);
 			

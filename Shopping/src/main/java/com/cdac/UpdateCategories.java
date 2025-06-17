@@ -31,9 +31,8 @@ public class UpdateCategories extends HttpServlet {
 		String url = ctx.getInitParameter("dbUrl");
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			db = DriverManager.getConnection(url,"root","cdac");
-			pst = db.prepareStatement("select * from categories");
+			Connection connection=(Connection) getServletContext().getAttribute("db");
+			pst = connection.prepareStatement("select * from categories");
 			
 			result = pst.executeQuery();
 			   out.println("<html>");
@@ -56,7 +55,7 @@ public class UpdateCategories extends HttpServlet {
 			  out.println("</tbody>");
 		        out.println("</table>");
 			
-		}catch(SQLException | ClassNotFoundException e) {
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 	    out.println("</body>");

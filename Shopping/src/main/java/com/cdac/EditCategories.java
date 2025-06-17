@@ -16,22 +16,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet("/updateCategories")
+@WebServlet("/EditCategories")
 public class EditCategories extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Connection db = null;
 		PreparedStatement pst = null;
-		ResultSet result = null;
-		PrintWriter out = response.getWriter();	
 		
 		HttpSession session = request.getSession();		
-		ServletContext ctx = request.getServletContext();
 		
-		String url = ctx.getInitParameter("dbUrl");
 		String id = (String) session.getAttribute("catId");
 		int catId = Integer.parseInt(id);
 		
@@ -41,13 +36,12 @@ public class EditCategories extends HttpServlet {
 		String caturl = request.getParameter("catUrl");
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			db = DriverManager.getConnection(url,"root","cdac");
-			pst = db.prepareStatement("update categories set catId = ? ,catName = ?,catDesc = ?,catUrl = ? from categories where catId=?");
+			Connection connection=(Connection) getServletContext().getAttribute("db");
+			pst = connection.prepareStatement("update categories set catId = ? ,catName = ?,catDesc = ?,catUrl = ? from categories where catId=?");
 			pst.setInt(1, catId);
 			pst.setString(2, name);
 			pst.setString(3, desc);
-			pst.setString(4,url);
+			pst.setString(4,caturl);
 			pst.setInt(5, catId);
 		
 			pst.executeUpdate();
@@ -55,7 +49,7 @@ public class EditCategories extends HttpServlet {
 			
 		
 			
-		}catch(SQLException | ClassNotFoundException e) {
+		}catch(SQLException  e) {
 			e.printStackTrace();
 		}
 

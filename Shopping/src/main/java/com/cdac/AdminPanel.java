@@ -27,8 +27,8 @@ public class AdminPanel extends HttpServlet {
 
             out.println("</head>");
             out.println("<body>");
-            out.println("<a href=\"category\">Add Categories</a>");
-            out.println("<a href=\"category\">Update Categories</a>");
+            out.println("<a href=\"addCategory\">Add Categories</a>");
+            out.println("<a href=\"updateCategories\">Update Categories</a>");
             out.println("<a href=\"AddProduct.jsp\">Add Product</a>");	
             out.println("<a href=\"SelectCategory.jsp\">Update Product</a>");
            
